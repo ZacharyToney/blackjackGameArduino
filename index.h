@@ -51,6 +51,8 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 		<script class="functionsForTable" type="text/javascript">
 
 			$(document).ready(function(){$(".table").fadeIn(2250,playerStartAndStartButton());});
+			var playerScore = 0;
+			var faceCardTwo = 0;
 
 			function playerStartAndStartButton() {
 				setTimeout(
@@ -64,29 +66,28 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				  }, 2000);
 			}
 
+			function hitButtonClicked(){
+				$(".playerCards").append("<div class='playerCardButton' style='display:inline-block;'><p>"+deck1.deal()+"</p></div>");
+				checkIfPlayerHas21();
+			}
+
 			function startGame() {
+				playerScore = 0;
+				faceCardTwo = 0;
 				$(".startButton").css("display",'none');
 				$(".hitButton").css('display', 'inline-block');
 				$(".standButton").css('display', 'inline-block');
 				$(".dealerCardButton").css('display', 'inline-block');
 				$(".playerCardButton").css('display', 'inline-block');
-				$(".dealerCardButton").append("<p>"+deck1.deal()+"</p>");
+				$(".dealer").append("<div class='dealerCardButton' style='display:inline-block;'><p id='dealerHidden' style='color:white;'>"+deck1.deal()+"</p></div>");
 				$(".dealer").append("<div class='dealerCardButton' style='display:inline-block;'><p id='dealerHidden' style='color:#e67e22;'>"+deck1.deal()+"</p></div>");
-				$(".playerCardButton").append("<p>"+deck1.deal()+"</p>");
 				$(".playerCards").append("<div class='playerCardButton' style='display:inline-block;'><p>"+deck1.deal()+"</p></div>");
-				midGame();
-			}
-			function midGame(){
+				$(".playerCards").append("<div class='playerCardButton' style='display:inline-block;'><p>"+deck1.deal()+"</p></div>");
 				checkIfPlayerHas21();
 			}
 
 			function checkIfPlayerHas21(){
 				var playerCards = $(".playerCardButton").text();
-				var playerScore = 0;
-				var faceCardTwo = 0;
-
-
-				
 				
 				if( playerCards.indexOf('Jack') >= 0){
 				  playerScore += 10;
@@ -104,6 +105,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 					faceCardTwo++;
 					var count = (playerCards.match(/Ace/g) || []).length;
 					if (count > 1){
+						faceCardTwo++;
 						playerScore = (count - 1) + 11;
 					}
 					else{
@@ -114,14 +116,23 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				if (faceCardTwo >= 2) {
 					if (playerScore > 21) {
 						alert("You Busted!");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
 					}
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
 					}
 					else{
 						alert("You got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
 					}
-					console.log(playerScore);
 				}
 				else{
 					var numbers = playerCards.match(/\d+/g).map(Number);
@@ -130,22 +141,28 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 					}
 					if (playerScore > 21) {
 						alert("You Busted!");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
 					}
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
 					}
 					else{
 						alert("You got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
 					}
 					console.log(playerScore);
 				}
-
-
-				
+				playerScore = 0;
 			}
 		</script>
-
-
 
 		<style type="text/css">
 
@@ -396,20 +413,16 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 
 		<div class="table">
 			<div class="dealer">
-				<div class="dealerCardButton">
-				</div>
 			</div>
 
 			<div class="playerCards">
-				<div class="playerCardButton">
-				</div>
 			</div>
 
 			<div class="player">
 				<div class="startButton" onclick="startGame()">
 					<p>Start</p>
 				</div>
-				<div class="hitButton">
+				<div class="hitButton" onclick="hitButtonClicked()">
 					<p>Hit</p>
 				</div>
 				<div class="standButton">
