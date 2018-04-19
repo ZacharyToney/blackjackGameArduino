@@ -1,5 +1,4 @@
-const char MAIN_page[] PROGMEM = R"=====(
-<!DOCTYPE html>
+const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 <html>
 	<head>
 		<title>Zachary Toney's Blackjack Game</title>
@@ -85,20 +84,6 @@ const char MAIN_page[] PROGMEM = R"=====(
 				background:url("http://1.bp.blogspot.com/-sD74A2hCNKE/UJhmT4ZoDII/AAAAAAAAD0A/lv-tithPdX0/s1600/Seamless+carpet+fabric+brown+pattern+texture.jpg");
 			}
 
-			.playerCards{
-				display: none;
-		    position: relative;
-		    border-radius: 1em;
-		    border-color: cyan;
-		    border-style: solid;
-		    border-width: 0.7em;
-		    top: 6em;
-		    left: 0;
-		    height: 8em;
-		    width: 43em;
-		    margin: 0 auto 0 auto;
-			}
-
 			.dealer{
 				display: none;
 		    position: relative;
@@ -106,7 +91,21 @@ const char MAIN_page[] PROGMEM = R"=====(
 		    border-color: cyan;
 		    border-style: solid;
 		    border-width: 0.7em;
-		    top: 6em;
+		    top: 3em;
+		    left: 0;
+		    height: 8em;
+		    width: 43em;
+		    margin: 0 auto 0 auto;
+			}
+			
+			.playerCards{
+				display: none;
+		    position: relative;
+		    border-radius: 1em;
+		    border-color: cyan;
+		    border-style: solid;
+		    border-width: 0.7em;
+		    top: 4em;
 		    left: 0;
 		    height: 8em;
 		    width: 43em;
@@ -120,7 +119,7 @@ const char MAIN_page[] PROGMEM = R"=====(
 		    border-color: cyan;
 		    border-style: solid;
 		    border-width: 0.7em;
-		    top: 6em;
+		    top: 5em;
 		    left: 0;
 		    height: 8em;
 		    width: 43em;
@@ -287,13 +286,6 @@ const char MAIN_page[] PROGMEM = R"=====(
 			  -moz-box-shadow: 0px 6px 0px #d35400;
 			  box-shadow: 0px 6px 0px #d35400;
 			}
-			.dealerCardButton:active{
-			    -webkit-box-shadow: 0px 2px 0px #d35400;
-			    -moz-box-shadow: 0px 2px 0px #d35400;
-			    box-shadow: 0px 2px 0px #d35400;
-			    position:relative;
-			    top:4px;
-			}
 			.playerCardButton{
 				display: none;
 		    background: black;
@@ -314,13 +306,6 @@ const char MAIN_page[] PROGMEM = R"=====(
 			  -webkit-box-shadow: 0px 6px 0px #d35400;
 			  -moz-box-shadow: 0px 6px 0px #d35400;
 			  box-shadow: 0px 6px 0px #d35400;
-			}
-			.playerCardButton:active{
-			    -webkit-box-shadow: 0px 2px 0px #d35400;
-			    -moz-box-shadow: 0px 2px 0px #d35400;
-			    box-shadow: 0px 2px 0px #d35400;
-			    position:relative;
-			    top:4px;
 			}
 
 			.table{
