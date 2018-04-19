@@ -57,9 +57,7 @@
 				  {
 						$(".player").fadeIn(2250);
 						$(".dealer").fadeIn(2250);
-						$(".startButton").css('display', 'inline-block');
-						$(".dealerCardButton").css('display', 'inline-block');
-						$(".dealerCardButton").append("<p>"+deck1.deal();+"</p>");	
+						$(".startButton").css('display', 'inline-block');	
 						
 				  }, 2000);
 			}
@@ -68,6 +66,8 @@
 				$(".startButton").css("display",'none');
 				$(".hitButton").css('display', 'inline-block');
 				$(".standButton").css('display', 'inline-block');
+				$(".dealerCardButton").css('display', 'inline-block');
+				$(".dealerCardButton").append("<p>"+deck1.deal()+"</p>");
 
 			}
 
