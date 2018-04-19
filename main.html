@@ -58,13 +58,17 @@
 						$(".player").fadeIn(2250);
 						$(".dealer").fadeIn(2250);
 						$(".startButton").css('display', 'inline-block');
+						$(".dealerCardButton").css('display', 'inline-block');
+						$(".dealerCardButton").append("<p>"+deck1.deal();+"</p>");	
+						
 				  }, 2000);
 			}
 
 			function startGame() {
 				$(".startButton").css("display",'none');
 				$(".hitButton").css('display', 'inline-block');
-				$(".standButton").css('display', 'inline-block');				
+				$(".standButton").css('display', 'inline-block');
+
 			}
 
 		</script>
@@ -245,7 +249,34 @@
 			    position:relative;
 			    top:4px;
 			}
-
+			.dealerCardButton{
+				display: none;
+		    background: black;
+		    height: 53%;
+		    width: 15%;
+			  position:relative;
+			  color:#ecf0f1;
+			  text-decoration:none;
+			  border-radius:5px;
+			  border:solid 1px #f39c12;
+			  background:#e67e22;
+			  text-align:center;
+			  padding:16px 18px 14px;
+			  margin: 12px;
+			  -webkit-transition: all 0.1s;
+				-moz-transition: all 0.1s;
+				transition: all 0.1s;
+			  -webkit-box-shadow: 0px 6px 0px #d35400;
+			  -moz-box-shadow: 0px 6px 0px #d35400;
+			  box-shadow: 0px 6px 0px #d35400;
+			}
+			.dealerCardButton:active{
+			    -webkit-box-shadow: 0px 2px 0px #d35400;
+			    -moz-box-shadow: 0px 2px 0px #d35400;
+			    box-shadow: 0px 2px 0px #d35400;
+			    position:relative;
+			    top:4px;
+			}
 			.table{
 				display: none;
 		    height: 37em;
@@ -265,6 +296,8 @@
 
 		<div class="table">
 			<div class="dealer">
+				<div class="dealerCardButton">
+				</div>
 			</div>
 			<div class="player">
 				<div class="startButton" onclick="startGame()">
