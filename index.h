@@ -58,6 +58,7 @@ const char MAIN_page[] PROGMEM = R"=====(
 				  {
 						$(".player").fadeIn(2250);
 						$(".dealer").fadeIn(2250);
+						$(".playerCards").fadeIn(2250);
 						$(".startButton").css('display', 'inline-block');	
 						
 				  }, 2000);
@@ -68,8 +69,10 @@ const char MAIN_page[] PROGMEM = R"=====(
 				$(".hitButton").css('display', 'inline-block');
 				$(".standButton").css('display', 'inline-block');
 				$(".dealerCardButton").css('display', 'inline-block');
+				$(".playerCardButton").css('display', 'inline-block');
 				$(".dealerCardButton").append("<p>"+deck1.deal()+"</p>");
-
+				$(".playerCardButton").append("<p>"+deck1.deal()+"</p>");
+				$(".playerCards").append("<div class='playerCardButton' style='display:inline-block;'><p>"+deck1.deal()+"</p></div>");
 			}
 
 		</script>
@@ -82,6 +85,19 @@ const char MAIN_page[] PROGMEM = R"=====(
 				background:url("http://1.bp.blogspot.com/-sD74A2hCNKE/UJhmT4ZoDII/AAAAAAAAD0A/lv-tithPdX0/s1600/Seamless+carpet+fabric+brown+pattern+texture.jpg");
 			}
 
+			.playerCards{
+				display: none;
+		    position: relative;
+		    border-radius: 1em;
+		    border-color: cyan;
+		    border-style: solid;
+		    border-width: 0.7em;
+		    top: 6em;
+		    left: 0;
+		    height: 8em;
+		    width: 43em;
+		    margin: 0 auto 0 auto;
+			}
 
 			.dealer{
 				display: none;
@@ -104,7 +120,7 @@ const char MAIN_page[] PROGMEM = R"=====(
 		    border-color: cyan;
 		    border-style: solid;
 		    border-width: 0.7em;
-		    top: 14em;
+		    top: 6em;
 		    left: 0;
 		    height: 8em;
 		    width: 43em;
@@ -278,6 +294,35 @@ const char MAIN_page[] PROGMEM = R"=====(
 			    position:relative;
 			    top:4px;
 			}
+			.playerCardButton{
+				display: none;
+		    background: black;
+		    height: 53%;
+		    width: 15%;
+			  position:relative;
+			  color:#ecf0f1;
+			  text-decoration:none;
+			  border-radius:5px;
+			  border:solid 1px #f39c12;
+			  background:#e67e22;
+			  text-align:center;
+			  padding:16px 18px 14px;
+			  margin: 12px;
+			  -webkit-transition: all 0.1s;
+				-moz-transition: all 0.1s;
+				transition: all 0.1s;
+			  -webkit-box-shadow: 0px 6px 0px #d35400;
+			  -moz-box-shadow: 0px 6px 0px #d35400;
+			  box-shadow: 0px 6px 0px #d35400;
+			}
+			.playerCardButton:active{
+			    -webkit-box-shadow: 0px 2px 0px #d35400;
+			    -moz-box-shadow: 0px 2px 0px #d35400;
+			    box-shadow: 0px 2px 0px #d35400;
+			    position:relative;
+			    top:4px;
+			}
+
 			.table{
 				display: none;
 		    height: 37em;
@@ -285,7 +330,7 @@ const char MAIN_page[] PROGMEM = R"=====(
 		    background: url(https://i.imgur.com/dAIZPHY.jpg);
 		    position: relative;
 		    border-radius: 13em;
-		    top: 8em;
+		    top: 4em;
 		    bottom: 0;
 		    left: 0;
 		    right: 0;
@@ -300,6 +345,12 @@ const char MAIN_page[] PROGMEM = R"=====(
 				<div class="dealerCardButton">
 				</div>
 			</div>
+
+			<div class="playerCards">
+				<div class="playerCardButton">
+				</div>
+			</div>
+
 			<div class="player">
 				<div class="startButton" onclick="startGame()">
 					<p>Start</p>
