@@ -1,4 +1,5 @@
 const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Zachary Toney's Blackjack Game</title>
@@ -70,10 +71,78 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				$(".dealerCardButton").css('display', 'inline-block');
 				$(".playerCardButton").css('display', 'inline-block');
 				$(".dealerCardButton").append("<p>"+deck1.deal()+"</p>");
+				$(".dealer").append("<div class='dealerCardButton' style='display:inline-block;'><p id='dealerHidden' style='color:#e67e22;'>"+deck1.deal()+"</p></div>");
 				$(".playerCardButton").append("<p>"+deck1.deal()+"</p>");
 				$(".playerCards").append("<div class='playerCardButton' style='display:inline-block;'><p>"+deck1.deal()+"</p></div>");
+				midGame();
+			}
+			function midGame(){
+				checkIfPlayerHas21();
 			}
 
+			function checkIfPlayerHas21(){
+				var playerCards = $(".playerCardButton").text();
+				var playerScore = 0;
+				var faceCardTwo = 0;
+
+
+				
+				
+				if( playerCards.indexOf('Jack') >= 0){
+				  playerScore += 10;
+				  faceCardTwo++;
+				}
+				if( playerCards.indexOf('Queen') >= 0){
+				  playerScore += 10;
+				  faceCardTwo++;
+				}
+				if( playerCards.indexOf('King') >= 0){
+				  playerScore += 10;
+				  faceCardTwo++;
+				}
+				if( playerCards.indexOf('Ace') >= 0){
+					faceCardTwo++;
+					var count = (playerCards.match(/Ace/g) || []).length;
+					if (count > 1){
+						playerScore = (count - 1) + 11;
+					}
+					else{
+				  playerScore += 11;
+				  }
+				}
+
+				if (faceCardTwo >= 2) {
+					if (playerScore > 21) {
+						alert("You Busted!");
+					}
+					else if(playerScore<21){
+						alert("You didn't bust yet!");
+					}
+					else{
+						alert("You got 21!(Blackjack!)");
+					}
+					console.log(playerScore);
+				}
+				else{
+					var numbers = playerCards.match(/\d+/g).map(Number);
+					for (i = 0; i < numbers.length; i++) {
+						playerScore += numbers[i];
+					}
+					if (playerScore > 21) {
+						alert("You Busted!");
+					}
+					else if(playerScore<21){
+						alert("You didn't bust yet!");
+					}
+					else{
+						alert("You got 21!(Blackjack!)");
+					}
+					console.log(playerScore);
+				}
+
+
+				
+			}
 		</script>
 
 
@@ -94,10 +163,10 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 		    top: 3em;
 		    left: 0;
 		    height: 8em;
-		    width: 43em;
+		    width: 60em;
 		    margin: 0 auto 0 auto;
 			}
-			
+
 			.playerCards{
 				display: none;
 		    position: relative;
@@ -108,7 +177,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 		    top: 4em;
 		    left: 0;
 		    height: 8em;
-		    width: 43em;
+		    width: 60em;
 		    margin: 0 auto 0 auto;
 			}
 
@@ -122,14 +191,14 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 		    top: 5em;
 		    left: 0;
 		    height: 8em;
-		    width: 43em;
+		    width: 60em;
 		    margin: 0 auto 0 auto;
 			}
 			.startButton{
 				display: none;
 		    background: black;
 		    height: 53%;
-		    width: 15%;
+		    width: 10%;
 			  position:relative;
 			  color:#ecf0f1;
 			  text-decoration:none;
@@ -157,7 +226,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				display: none;
 		    background: black;
 		    height: 53%;
-		    width: 15%;
+		    width: 10%;
 			  position:relative;
 			  color:#ecf0f1;
 			  text-decoration:none;
@@ -185,7 +254,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				display: none;
 		    background: black;
 		    height: 53%;
-		    width: 15%;
+		    width: 10%;
 			  position:relative;
 			  color:#ecf0f1;
 			  text-decoration:none;
@@ -213,7 +282,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				display: none;
 		    background: black;
 		    height: 53%;
-		    width: 15%;
+		    width: 10%;
 			  position:relative;
 			  color:#ecf0f1;
 			  text-decoration:none;
@@ -241,7 +310,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				display: none;
 		    background: black;
 		    height: 53%;
-		    width: 15%;
+		    width: 10%;
 			  position:relative;
 			  color:#ecf0f1;
 			  text-decoration:none;
@@ -269,7 +338,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				display: none;
 		    background: black;
 		    height: 53%;
-		    width: 15%;
+		    width: 10%;
 			  position:relative;
 			  color:#ecf0f1;
 			  text-decoration:none;
@@ -290,7 +359,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				display: none;
 		    background: black;
 		    height: 53%;
-		    width: 15%;
+		    width: 10%;
 			  position:relative;
 			  color:#ecf0f1;
 			  text-decoration:none;
