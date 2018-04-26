@@ -1,5 +1,4 @@
 const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 	<head>
 		<title>Zachary Toney's Blackjack Game</title>
@@ -70,7 +69,92 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				$(".playerCards").append("<div class='playerCardButton' style='display:inline-block;'><p>"+deck1.deal()+"</p></div>");
 				checkIfPlayerHas21();
 			}
+			function checkIfDealerhas17(){
 
+			}
+			function checkIfDealerBusted(){
+				var dealerScore = 0;
+				faceCardTwo = 0;
+				var dealerCards = $(".dealerCardButton").text();
+				
+				if( dealerCards.indexOf('Jack') >= 0){
+				  dealerScore += 10;
+				  faceCardTwo++;
+				}
+				if( dealerCards.indexOf('Queen') >= 0){
+				  dealerScore += 10;
+				  faceCardTwo++;
+				}
+				if( dealerCards.indexOf('King') >= 0){
+				  dealerScore += 10;
+				  faceCardTwo++;
+				}
+				if( dealerCards.indexOf('Ace') >= 0){
+					faceCardTwo++;
+					var count = (dealerCards.match(/Ace/g) || []).length;
+					if (count > 1){
+						faceCardTwo++;
+						dealerScore = (count - 1) + 11;
+					}
+					else{
+				  dealerScore += 11;
+				  }
+				}
+
+				if (faceCardTwo >= 2) {
+					if(dealerScore == 21){
+						alert("You got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if (dealerScore > 21) {
+						alert("You Busted!");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if(dealerScore<21){
+						alert("You didn't bust yet!");
+					}
+				}
+				else{
+					var numbers = dealerCards.match(/\d+/g).map(Number);
+					for (i = 0; i < numbers.length; i++) {
+						dealerScore += numbers[i];
+					}
+					if(dealerScore == 21){
+						alert("Dealer got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if (dealerScore > 21) {
+						alert("You Busted!");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if(dealerScore<21){
+						alert("You didn't bust yet!");
+					}
+					
+					console.log(dealerScore);
+				}
+				dealerScore = 0;
+			}
+			function standButtonClicked(){
+				$('p').removeAttr('id');
+				$("p").addClass('showHiddenDealer');
+			}
 			function startGame() {
 				playerScore = 0;
 				faceCardTwo = 0;
@@ -87,6 +171,8 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 			}
 
 			function checkIfPlayerHas21(){
+				playerScore = 0;
+				faceCardTwo = 0;
 				var playerCards = $(".playerCardButton").text();
 				
 				if( playerCards.indexOf('Jack') >= 0){
@@ -114,7 +200,15 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				}
 
 				if (faceCardTwo >= 2) {
-					if (playerScore > 21) {
+					if(playerScore == 21){
+						alert("You got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if (playerScore > 21) {
 						alert("You Busted!");
 						$(".playerCardButton").remove();
 						$(".dealerCardButton").remove();
@@ -124,14 +218,6 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 					}
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
-					}
-					else{
-						alert("You got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
 					}
 				}
 				else{
@@ -139,7 +225,15 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 					for (i = 0; i < numbers.length; i++) {
 						playerScore += numbers[i];
 					}
-					if (playerScore > 21) {
+					if(playerScore == 21){
+						alert("You got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if (playerScore > 21) {
 						alert("You Busted!");
 						$(".playerCardButton").remove();
 						$(".dealerCardButton").remove();
@@ -150,14 +244,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
 					}
-					else{
-						alert("You got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
-					}
+					
 					console.log(playerScore);
 				}
 				playerScore = 0;
@@ -165,7 +252,9 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 		</script>
 
 		<style type="text/css">
-
+			.showHiddenDealer{
+				color:white!important;
+			}
 			body{
 				background:url("http://1.bp.blogspot.com/-sD74A2hCNKE/UJhmT4ZoDII/AAAAAAAAD0A/lv-tithPdX0/s1600/Seamless+carpet+fabric+brown+pattern+texture.jpg");
 			}
@@ -425,18 +514,11 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				<div class="hitButton" onclick="hitButtonClicked()">
 					<p>Hit</p>
 				</div>
-				<div class="standButton">
+				<div class="standButton" onclick="standButtonClicked()">
 					<p>Stand</p>
-				</div>
-				<div class="splitButton">
-					<p>Split</p>
-				</div>
-				<div class="doubleDownButton">
-					<p>Double Down</p>
 				</div>
 			</div>
 		</div>
 
 	</body>
-</html>
-)=====";
+</html>)=====";
