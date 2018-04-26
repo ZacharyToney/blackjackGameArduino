@@ -86,6 +86,8 @@
 			}
 
 			function checkIfPlayerHas21(){
+				playerScore = 0;
+				faceCardTwo = 0;
 				var playerCards = $(".playerCardButton").text();
 				
 				if( playerCards.indexOf('Jack') >= 0){
@@ -113,7 +115,15 @@
 				}
 
 				if (faceCardTwo >= 2) {
-					if (playerScore > 21) {
+					if(playerScore == 21){
+						alert("You got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if (playerScore > 21) {
 						alert("You Busted!");
 						$(".playerCardButton").remove();
 						$(".dealerCardButton").remove();
@@ -123,14 +133,6 @@
 					}
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
-					}
-					else{
-						alert("You got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
 					}
 				}
 				else{
@@ -138,7 +140,15 @@
 					for (i = 0; i < numbers.length; i++) {
 						playerScore += numbers[i];
 					}
-					if (playerScore > 21) {
+					if(playerScore == 21){
+						alert("You got 21!(Blackjack!)");
+						$(".playerCardButton").remove();
+						$(".dealerCardButton").remove();
+						$(".hitButton").css("display",'none');
+						$(".standButton").css("display",'none');
+						playerStartAndStartButton();
+					}
+					else if (playerScore > 21) {
 						alert("You Busted!");
 						$(".playerCardButton").remove();
 						$(".dealerCardButton").remove();
@@ -149,14 +159,7 @@
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
 					}
-					else{
-						alert("You got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
-					}
+					
 					console.log(playerScore);
 				}
 				playerScore = 0;
