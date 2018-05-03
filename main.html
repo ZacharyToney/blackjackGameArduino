@@ -65,7 +65,7 @@
               $(".hitButton").css("display",'none');
               $(".standButton").css("display",'none');
               playerStartAndStartButton();
-				  }, 3000);
+				  }, 2200);
 			}
 			function playerStartAndStartButton() {
             deck1.reset();
@@ -86,16 +86,37 @@
 				var dealerCards = $(".dealerCardButton").text();
 
         if( dealerCards.indexOf('Jack') >= 0){
-          dealerScore += 10;
           faceCardTwo++;
+          var count = (dealerCards.match(/Jack/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            dealerScore = (count) * 10;
+          }
+          else{
+          dealerScore += 10;
+          }
         }
         if( dealerCards.indexOf('Queen') >= 0){
-          dealerScore += 10;
           faceCardTwo++;
+          var count = (dealerCards.match(/Queen/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            dealerScore = (count) * 10;
+          }
+          else{
+          dealerScore += 10;
+          }
         }
         if( dealerCards.indexOf('King') >= 0){
-          dealerScore += 10;
           faceCardTwo++;
+          var count = (dealerCards.match(/King/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            dealerScore = (count) * 10;
+          }
+          else{
+          dealerScore += 10;
+          }
         }
         if( dealerCards.indexOf('Ace') >= 0){
           faceCardTwo++;
@@ -214,27 +235,48 @@
 				var playerCards = $(".playerCardButton").text();
 				
 				if( playerCards.indexOf('Jack') >= 0){
-				  playerScore += 10;
-				  faceCardTwo++;
+          faceCardTwo++;
+          var count = (playerCards.match(/Jack/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            playerScore = (count) * 10;
+          }
+          else{
+          playerScore += 10;
+          }
 				}
 				if( playerCards.indexOf('Queen') >= 0){
-				  playerScore += 10;
-				  faceCardTwo++;
+          faceCardTwo++;
+          var count = (playerCards.match(/Queen/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            playerScore = (count) * 10;
+          }
+          else{
+          playerScore += 10;
+          }
 				}
 				if( playerCards.indexOf('King') >= 0){
-				  playerScore += 10;
-				  faceCardTwo++;
+          faceCardTwo++;
+          var count = (playerCards.match(/King/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            playerScore = (count) * 10;
+          }
+          else{
+          playerScore += 10;
+          }
 				}
 				if( playerCards.indexOf('Ace') >= 0){
-					faceCardTwo++;
-					var count = (playerCards.match(/Ace/g) || []).length;
-					if (count > 1){
-						faceCardTwo++;
-						playerScore = (count - 1) + 11;
-					}
-					else{
-				  playerScore += 11;
-				  }
+          faceCardTwo++;
+          var count = (playerCards.match(/Ace/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            playerScore = (count) * 10;
+          }
+          else{
+          playerScore += 10;
+          }
 				}
 
 				if (faceCardTwo >= 2) {
