@@ -48,112 +48,150 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 	  </script>
 
 		<script class="functionsForTable" type="text/javascript">
+      var dealerScore = 0;
 
 			$(document).ready(function(){$(".table").fadeIn(2250,playerStartAndStartButton());});
 			var playerScore = 0;
+      var dealerScore = 0;
 			var faceCardTwo = 0;
-
-			function playerStartAndStartButton() {
-				setTimeout(
+			function timeoutForPlayerToSee(){
+					$('p').removeAttr('id');
+					$("p").addClass('showHiddenDealer');
+					setTimeout(
 				  function() 
-				  {
+			  	{
+              $(".playerCardButton").remove();
+              $(".dealerCardButton").remove();
+              $(".hitButton").css("display",'none');
+              $(".standButton").css("display",'none');
+              playerStartAndStartButton();
+				  }, 3000);
+			}
+			function playerStartAndStartButton() {
+            deck1.reset();
+            deck1.shuffle();
 						$(".player").fadeIn(2250);
 						$(".dealer").fadeIn(2250);
 						$(".playerCards").fadeIn(2250);
-						$(".startButton").css('display', 'inline-block');	
-						
-				  }, 2000);
+						$(".startButton").css('display', 'inline-block');
 			}
 
 			function hitButtonClicked(){
 				$(".playerCards").append("<div class='playerCardButton' style='display:inline-block;'><p>"+deck1.deal()+"</p></div>");
 				checkIfPlayerHas21();
 			}
-			function checkIfDealerhas17(){
-
-			}
-			function checkIfDealerBusted(){
-				var dealerScore = 0;
+			function checkIfDealerHasBeatPlayer(){
+				dealerScore = 0;
 				faceCardTwo = 0;
 				var dealerCards = $(".dealerCardButton").text();
-				
-				if( dealerCards.indexOf('Jack') >= 0){
-				  dealerScore += 10;
-				  faceCardTwo++;
-				}
-				if( dealerCards.indexOf('Queen') >= 0){
-				  dealerScore += 10;
-				  faceCardTwo++;
-				}
-				if( dealerCards.indexOf('King') >= 0){
-				  dealerScore += 10;
-				  faceCardTwo++;
-				}
-				if( dealerCards.indexOf('Ace') >= 0){
-					faceCardTwo++;
-					var count = (dealerCards.match(/Ace/g) || []).length;
-					if (count > 1){
-						faceCardTwo++;
-						dealerScore = (count - 1) + 11;
-					}
-					else{
-				  dealerScore += 11;
-				  }
-				}
 
-				if (faceCardTwo >= 2) {
-					if(dealerScore == 21){
-						alert("You got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
-					}
-					else if (dealerScore > 21) {
-						alert("You Busted!");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
-					}
-					else if(dealerScore<21){
-						alert("You didn't bust yet!");
-					}
-				}
-				else{
-					var numbers = dealerCards.match(/\d+/g).map(Number);
-					for (i = 0; i < numbers.length; i++) {
-						dealerScore += numbers[i];
-					}
-					if(dealerScore == 21){
-						alert("Dealer got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
-					}
-					else if (dealerScore > 21) {
-						alert("You Busted!");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
-					}
-					else if(dealerScore<21){
-						alert("You didn't bust yet!");
-					}
-					
-					console.log(dealerScore);
-				}
-				dealerScore = 0;
+        if( dealerCards.indexOf('Jack') >= 0){
+          dealerScore += 10;
+          faceCardTwo++;
+        }
+        if( dealerCards.indexOf('Queen') >= 0){
+          dealerScore += 10;
+          faceCardTwo++;
+        }
+        if( dealerCards.indexOf('King') >= 0){
+          dealerScore += 10;
+          faceCardTwo++;
+        }
+        if( dealerCards.indexOf('Ace') >= 0){
+          faceCardTwo++;
+          var count = (dealerCards.match(/Ace/g) || []).length;
+          if (count > 1){
+            faceCardTwo++;
+            dealerScore = (count - 1) + 11;
+          }
+          else{
+          dealerScore += 11;
+          }
+        }
+
+        if (faceCardTwo >= 2) {
+          if(dealerScore == 21){
+            if(dealerScore == playerScore){
+              alert("It's a push!(tie!)")
+              timeoutForPlayerToSee();
+
+            }
+            else if (dealerScore > playerScore){
+              alert("Dealer won!");
+              timeoutForPlayerToSee();
+            }
+          }
+          else if (dealerScore > 21) {
+            alert("Dealer Busted!");
+            timeoutForPlayerToSee();
+          }
+          else if(dealerScore >= 17){
+            if (dealerScore == playerScore) {
+              alert("It's a push! (tie!)");
+              timeoutForPlayerToSee();
+            }
+            else if(dealerScore > playerScore){
+            	alert("Dealer Won!");
+            	timeoutForPlayerToSee();
+            }
+            else if(dealerScore < playerScore){
+            	alert("Player Won!");
+            	timeoutForPlayerToSee();
+            }
+          }
+          else if(dealerScore<17){
+            	$(".dealer").append("<div class='dealerCardButton' style='display:inline-block;'><p id='dealerHidden' style='color:#e67e22;'>"+deck1.deal()+"</p></div>");
+            	checkIfDealerHasBeatPlayer();
+          }
+        }
+        else{
+          var numbers = dealerCards.match(/\d+/g).map(Number);
+          for (i = 0; i < numbers.length; i++) {
+            dealerScore += numbers[i];
+          }
+
+          if(dealerScore == 21){
+            if(dealerScore == playerScore){
+              alert("It's a push!(tie!)");
+              timeoutForPlayerToSee();
+            }
+            else if (dealerScore > playerScore){
+              alert("Dealer won!");
+              timeoutForPlayerToSee();
+            }
+          }
+          else if (dealerScore > 21) {
+            alert("Dealer Busted!");
+            timeoutForPlayerToSee();
+          }
+          else if(dealerScore >= 17){
+            if (dealerScore == playerScore) {
+              alert("It's a push! (tie!)");
+              timeoutForPlayerToSee();
+
+            }
+            else if(dealerScore > playerScore){
+            	alert("Dealer Won!");
+            	timeoutForPlayerToSee();
+
+            }
+            else if(dealerScore < playerScore){
+            	alert("Player Won!");
+            	timeoutForPlayerToSee();
+
+            }
+          }
+          else if(dealerScore<17){
+            	$(".dealer").append("<div class='dealerCardButton' style='display:inline-block;'><p id='dealerHidden' style='color:#e67e22;'>"+deck1.deal()+"</p></div>");
+            	checkIfDealerHasBeatPlayer();
+          }
+        
+        }
+        console.log(dealerScore);
 			}
 			function standButtonClicked(){
-				$('p').removeAttr('id');
-				$("p").addClass('showHiddenDealer');
+				
+				checkIfDealerHasBeatPlayer();
 			}
 			function startGame() {
 				playerScore = 0;
@@ -202,19 +240,11 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 				if (faceCardTwo >= 2) {
 					if(playerScore == 21){
 						alert("You got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
+						timeoutForPlayerToSee();
 					}
 					else if (playerScore > 21) {
 						alert("You Busted!");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
+						timeoutForPlayerToSee();
 					}
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
@@ -227,27 +257,17 @@ const char MAIN_page[] PROGMEM = R"=====(<!DOCTYPE html>
 					}
 					if(playerScore == 21){
 						alert("You got 21!(Blackjack!)");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
+						timeoutForPlayerToSee();
 					}
 					else if (playerScore > 21) {
 						alert("You Busted!");
-						$(".playerCardButton").remove();
-						$(".dealerCardButton").remove();
-						$(".hitButton").css("display",'none');
-						$(".standButton").css("display",'none');
-						playerStartAndStartButton();
+						timeoutForPlayerToSee();
 					}
 					else if(playerScore<21){
 						alert("You didn't bust yet!");
 					}
-					
 					console.log(playerScore);
 				}
-				playerScore = 0;
 			}
 		</script>
 
